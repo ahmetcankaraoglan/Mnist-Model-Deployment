@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head xmlns="http://www.w3.org/1999/xhtml">
+    <meta charset="UTF-8">
+    <title>Digit Recognition</title>
+    <link rel="stylesheet" href="static/css/style.css">
+    <link rel="stylesheet" type="text/css"
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
+            integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
+            crossorigin="anonymous"></script>
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+
+</head>
+<body>
+
+
+
+
+
+    <canvas id="canvas" ></canvas>
+    <hr>
+    <button type="button" id="download" onclick="send_image()">Send</button>&nbsp
+    <button type="button" id="clear_canvas" >Clear</button>
+    <hr>
+    <span id="prediction">Prediction: </span>
+    <form method="post" accept-charset="utf-8" name="imageForm">
+        <input id="send" name="send" type="hidden"/>
+    </form>
+
+
+
+    <script >
+
+        window.addEventListener("load", () => {
+    const canvas=document.querySelector("#canvas");
+    const ctx=canvas.getContext("2d");
+
+    //Resizing
+    canvas.height=400;
+    canvas.width=400;
+
+    //variables
+    let painting=false;
+
+    function startPosition(e){
+        painting=true;
+        draw(e);
+    }
+
+    function finishedPosition(){
+        painting=false;
+
+        ctx.beginPath();
+
+    }
+
+    function draw(e){
+        if(!painting) return;
+
+        ctx.lineWidth=30;
+        ctx.lineCap='round';
+
+        ctx.lineTo(e.clientX,e.clientY);
+        ctx.stroke();
+        ctx.beginPath();
+        ctx.moveTo(e.clientX,e.clientY);
+    }
+
+    $("#clear_canvas").on("click",function clearCanvas(){
+        ctx.clearRect(0,0,canvas.width,canvas.height);
+        document.getElementById('prediction').innerHTML="Prediction: ";
+    })
+
+
+    //Event Listeners
+    canvas.addEventListener('mousedown', startPosition);
+    canvas.addEventListener('mouseup', finishedPosition);
+    canvas.addEventListener('mousemove', draw);
+
+
+});
+
+
+
+function  send_image(){
+
+        var imageUrl=canvas.toDataURL();
+        document.getElementById('send').value=imageUrl;
+        var fd=new FormData(document.forms["imageForm"]);
+        var xhr= new XMLHttpRequest({mozSystem: true});
+        xhr.open('POST','/send_image',true);
+
+        xhr.onreadystatechange = function(){
+            if(xhr.readyState == XMLHttpRequest.DONE){
+                document.getElementById('prediction').innerHTML=xhr.responseText;
+            }
+        };
+
+        xhr.onload= function(){};
+
+        xhr.send(fd);
+
+   }
+    </script>
+ <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script>
+</body>
+</html>
