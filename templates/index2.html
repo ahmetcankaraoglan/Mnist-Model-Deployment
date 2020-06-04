@@ -14,6 +14,7 @@
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
           integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@2.0.0/dist/tf.min.js"></script>
 
 </head>
 <body class="bg-dark">
@@ -65,9 +66,13 @@
 
 <script>
 
-        window.addEventListener("load", () => {
+
+
+    window.addEventListener("load", () => {
     const canvas=document.querySelector("#canvas");
     const ctx=canvas.getContext("2d");
+
+
 
     //Resizing
     canvas.height=300;
@@ -120,15 +125,23 @@
 
 function  send_image(){
 
+
         var imageUrl=canvas.toDataURL();
         document.getElementById('send').value=imageUrl;
         var fd=new FormData(document.forms["imageForm"]);
         var xhr= new XMLHttpRequest({mozSystem: true});
+
         xhr.open('POST','/send_image',true);
         document.getElementById('prediction').innerHTML="Wait! Predicting Digit.....";
         xhr.onreadystatechange = function(){
             if(xhr.readyState == XMLHttpRequest.DONE){
-                document.getElementById('prediction').innerHTML="Prediction: "+xhr.responseText;
+                (async() => {
+                   const model= await tf.loadLayersModel("/static/tfjs_model/model.json");
+                    var image=tf.tensor(JSON.parse(xhr.response).image,[1, 28, 28, 1]);
+                    document.getElementById('prediction').innerHTML="Prediction: "+model.predict(image).argMax(1).arraySync();
+                })();
+
+
             }
         };
 
