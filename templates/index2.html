@@ -67,12 +67,17 @@
 <script>
 
 
-
+    var model=0;
     window.addEventListener("load", () => {
     const canvas=document.querySelector("#canvas");
     const ctx=canvas.getContext("2d");
 
 
+    (async() => {
+        console.log("Loading Model")
+        model= await tf.loadLayersModel("/static/tfjs_model/model.json");
+        console.log("Model Loaded");
+    })();
 
     //Resizing
     canvas.height=300;
@@ -135,12 +140,9 @@ function  send_image(){
         document.getElementById('prediction').innerHTML="Wait! Predicting Digit.....";
         xhr.onreadystatechange = function(){
             if(xhr.readyState == XMLHttpRequest.DONE){
-                (async() => {
-                   const model= await tf.loadLayersModel("/static/tfjs_model/model.json");
-                    var image=tf.tensor(JSON.parse(xhr.response).image,[1, 28, 28, 1]);
-                    document.getElementById('prediction').innerHTML="Prediction: "+model.predict(image).argMax(1).arraySync();
-                })();
 
+                var image=tf.tensor(JSON.parse(xhr.response).image,[1, 28, 28, 1]);
+                document.getElementById('prediction').innerHTML="Prediction: "+model.predict(image).argMax(1).arraySync();
 
             }
         };
