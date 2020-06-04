@@ -33,5 +33,5 @@ def send_image():
     return json.dumps({"image": image_data.tolist()})
 
 if __name__=='__main__':
-    app.run(debug=True,port=4000)
+    app.run()
 
