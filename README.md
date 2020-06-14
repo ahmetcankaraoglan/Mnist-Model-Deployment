@@ -4,7 +4,7 @@
 
 ## Project demo video: 
 
-## Project Link(Deployed on **Heroku**):
+## Project Link(Deployed on *Heroku*):
 https://hand-written-digit-recognizer.herokuapp.com/
 
 ### Aim
