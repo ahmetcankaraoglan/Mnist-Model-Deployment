@@ -4,7 +4,8 @@
 
 ## Project demo video: 
 
-## Project Link(Deployed on *Heroku*): https://hand-written-digit-recognizer.herokuapp.com/
+## Project Link(Deployed on **Heroku**):
+https://hand-written-digit-recognizer.herokuapp.com/
 
 ### Aim
 This project aims to recognize a digit that is drawn on the canvas below.
