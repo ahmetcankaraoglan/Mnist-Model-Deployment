@@ -3,12 +3,13 @@
 <img src="https://github.com/rajtilakls2510/DigitClassifier/blob/master/Project%20demo2.png">
 
 ## Project demo video: 
+https://youtu.be/duZlSbR_FXE
 
 ## Project Link(Deployed on *Heroku*):
 https://hand-written-digit-recognizer.herokuapp.com/
 
 ### Aim
-This project aims to recognize a digit that is drawn on the canvas below.
+This project aims to recognize a digit that is drawn on the canvas provided.
 
 ### How to use?
 
