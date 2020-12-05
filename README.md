@@ -60,3 +60,6 @@ Training Process:
 
 Best that was achived in kaggle: 99.41%
 Model currently running: 99.27% 
+
+
+
