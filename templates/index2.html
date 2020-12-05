@@ -2,6 +2,8 @@
 <html lang="en">
 <head xmlns="http://www.w3.org/1999/xhtml">
     <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Digit Recognition</title>
     <link rel="stylesheet" href="static/css/style.css">
     <link rel="stylesheet" type="text/css"
@@ -14,49 +16,41 @@
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
           integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
-</head>
+    <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@2.0.0/dist/tf.min.js"></script>
 
-<body>
-    <div class="container">
-        <div>
-	    <span class="badge badge-info">MNIST</span>
-            <h1 class="display-3 text-center">DigitRecognizer</h1>
-            <p class="p-2">
-              <center><p> This is a live demo of a Kaggle <a href="https://www.kaggle.com/c/digit-recognizer" target"_blank">DigitRecognizer</a>
+</head>
+<body class="bg-dark">
+<body bgcolor='white'>
+<div class="container">
+    <div class="row">
+        <div class="card mt-50" style="width: 100%; height: 100%">
+            <div class="card-header" style="text-align: center">
+                <h1>Welcome to Digit Recognizer</h1>
+                <center><p> This is a live demo of a Kaggle <a href="https://www.kaggle.com/c/digit-recognizer" target"_blank">DigitRecognizer</a>
             developed by <a href="https://github.com/ahmetcankaraoglan" target="_blank">Ahmet Can Karaoğlan </a> </p></center>
                     <p></p>
                 </center>
             </div>
-            </p>
-            <hr />
-            <p class="d-block text-center text-muted">
-              Draw a digit in box below 👇 and press <code>Predict</code> button
-            </p>
-    
-                
-                 <div class="col-12" style="text-align: center">
-                   <canvas id="canvas" ></canvas>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-12" style="text-align: center">
+                        <h3>Draw a digit in box below 👇 and press Predict button </h3>
+                    </div>
+                </div>
+                <div class="row" >
+                    <div class="col-12" style="text-align: center">
+                        <canvas id="canvas" ></canvas>
 
                         </div>
                 </div>
                 <br>
                 <div class="row">
                     <div class="col-12" style="text-align: center">
-                        <button class="btn btn-success" href="#" id="predict">Predict</button>
-                    <button class="btn btn-primary" href="#" id="clearButton">Clear</button>
-                </p>
-            </div>
-        </div>
-
-        <br>
-        <div class="alert alert-info centered" role="alert">
-            <h5 id="result">Get your prediction here!</h5>
-        </div> 
-        
-        <footer class="footer">
-          <p>Ahmet Can Karaoğlan&#128540;</p>
-        </footer> 
-    </div> 
+                        <button class="btn btn-primary" id="predict" onclick="send_image()">Predict</button>&nbsp;&nbsp;&nbsp;
+                        <button class="btn btn-warning" id="clear_canvas" >Clear</button>
+                    </div>
+                </div>
+                <br>
                 <div class="row">
                     <div class="col-12" style="text-align: center">
                         <h4><span id="prediction"></span></h4>
@@ -65,6 +59,9 @@
                 <form method="post" accept-charset="utf-8" name="imageForm">
                     <input id="send" name="send" type="hidden"/>
                 </form>
+                <div class="row">
+                    <div class="col-12" style="text-align: right">
+                        <span >By Ahmet Can Karaoğlan </span>
                     </div>
                 </div>
             </div>
@@ -75,9 +72,18 @@
 
 <script>
 
-        window.addEventListener("load", () => {
+
+    var model=0;
+    window.addEventListener("load", () => {
     const canvas=document.querySelector("#canvas");
     const ctx=canvas.getContext("2d");
+
+
+    (async() => {
+        console.log("Loading Model")
+        model= await tf.loadLayersModel("/static/tfjs_model/model.json");
+        console.log("Model Loaded");
+    })();
 
     //Resizing
     canvas.height=300;
@@ -105,7 +111,7 @@
           var mouseX = e.clientX - rect.left;
           var mouseY = e.clientY - rect.top;
 
-        ctx.lineWidth=10;
+        ctx.lineWidth=30;
         ctx.lineCap='round';
 
         ctx.lineTo(mouseX,mouseY);
@@ -130,15 +136,20 @@
 
 function  send_image(){
 
+
         var imageUrl=canvas.toDataURL();
         document.getElementById('send').value=imageUrl;
         var fd=new FormData(document.forms["imageForm"]);
         var xhr= new XMLHttpRequest({mozSystem: true});
+
         xhr.open('POST','/send_image',true);
         document.getElementById('prediction').innerHTML="Wait! Predicting Digit.....";
         xhr.onreadystatechange = function(){
             if(xhr.readyState == XMLHttpRequest.DONE){
-                document.getElementById('prediction').innerHTML="Prediction: "+xhr.responseText;
+
+                var image=tf.tensor(JSON.parse(xhr.response).image,[1, 28, 28, 1]);
+                document.getElementById('prediction').innerHTML="Prediction: "+model.predict(image).argMax(1).arraySync();
+
             }
         };
 
