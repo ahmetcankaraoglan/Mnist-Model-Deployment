@@ -43,8 +43,6 @@ Training Process:
 4. Defining the model.
 5. Model Plot
 
-<img src="https://github.com/rajtilakls2510/DigitClassifier/blob/master/Model_Architecture.png">
-
 6. Applied Sparse Categorical Crossentropy loss function.
 7. The submission part is for the generation of submission file for the kaggle Competition.(https://www.kaggle.com/c/digit-recognizer)
 
