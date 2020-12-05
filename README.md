@@ -1,6 +1,6 @@
 # DigitClassifier
 
-<img src="https://github.com/rajtilakls2510/DigitClassifier/blob/master/Project%20demo2.png">
+![Test Image 1](DigitRecognizer.png)
 
 ## Project demo video: 
 https://youtu.be/duZlSbR_FXE
