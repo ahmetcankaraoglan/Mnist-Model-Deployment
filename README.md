@@ -1,5 +1,4 @@
-# Derin Öğrenme Yöntemlerinden CNN ile Rakam Tanıma Projesi Model Deployment
-# Flask & Heroku Model Deployment
+# Rakam Tanıma Projesi (Mnist) Flask & Heroku Model Deployment
 
 ![Test Image 1](DigitRecognizer.PNG)
 
