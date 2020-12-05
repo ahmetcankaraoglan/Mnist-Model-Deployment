@@ -1,6 +1,6 @@
 # DigitClassifier
 
-![Test Image 1](DigitRecognizer.png)
+![Test Image 1](DigitRecognizer.PNG)
 
 ## Project demo video: 
 https://youtu.be/duZlSbR_FXE
