@@ -2,11 +2,10 @@
 
 ![Test Image 1](DigitRecognizer.PNG)
 
-## Project demo video: 
-https://youtu.be/duZlSbR_FXE
+
 
 ## Project Link(Deployed on *Heroku*):
-https://hand-written-digit-recognizer.herokuapp.com/
+https://mnistdeployment.herokuapp.com/
 
 ### Aim
 This project aims to recognize a digit that is drawn on the canvas provided.
@@ -30,14 +29,7 @@ The prediction time for the first digit can take upto 20 secs(Happens mainly bec
 ### Description
 The model was trained on the famous MNIST Dataset. There are two parts to this project: Model Training and Model Deployment.
 
-#### Model Deployment
-The application has two branches: master and tensorflowjs
 
-In the master branch, the project is implemented with the tensorflow-cpu library.(Includes download  size >500MB)
-In the tensorflowjs branch, the project is implemented with tensorflowjs library(Very very less dowanload size).
-
-If you do not want to use tensorflow-cpu python which has download size >500MB, you can use the project implemented with tensorflowjs(Almost no download size) as we are using a 
-Content Delivery Network(cdn) for tensorflowjs.
 
 #### Model Training
 
