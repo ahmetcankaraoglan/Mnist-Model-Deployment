@@ -1,39 +1,45 @@
-# DigitClassifier
+# Derin Öğrenme Yöntemlerinden CNN ile Rakam Tanıma Projesi Model Deployment
+# Flask & Heroku Model Deployment
 
 ![Test Image 1](DigitRecognizer.PNG)
 
+## Proje Linki (*Heroku* ile Deploy edildi):
 
-
-## Project Link(Deployed on *Heroku*):
 https://mnistdeployment.herokuapp.com/
 
-### Aim
-This project aims to recognize a digit that is drawn on the canvas provided.
+### Amaç
 
-### How to use?
+Bu projede amacımız, Deploy ortamında sağlanan tuval alanına çizilen rakamları doğru bir şekilde tanımlamaktır.
 
-1. Clone the repository
-2. Install the required packages in "requirements.txt" file. 
+### Gereklilikler
 
-Some packages are:
+Repoyu olduğu gibi kopyalamanız veya forklamanız gerekmektedir.
 
-- numpy
-- pandas
-- tensorflow
+### Projeyi Heroku'dan Çalıştırmak için:
 
-3. Run the "application.py" file
+1. Bu repo olduğu gibi kopyalanarak yeni bir repo oluşturulur. Örneğin Mnist-Prediction isimli bir repo veya forklayarak direk devam edebilirsiniz.
+2. [Heroku](https://www.heroku.com/) 'dan hesap açılır.
+3. Create New App bölümünden yeni bir uygulama açılır ve isimlendirilir.
+4. Deploy bölümünde yer alan "Deployment Method" bölümünden Github seçilir.
+5. Mnist-Prediction isminde Github'ta yer alan repo ile eşleştirme yapılır.
+6. Manual Deploy diyerek model deploy edilir.
 
-### Run
-The prediction time for the first digit can take upto 20 secs(Happens mainly because the model is loading). But subsequently the prediction time reduces greatly.
+### Deployu Çalıştırma
 
-### Description
-The model was trained on the famous MNIST Dataset. There are two parts to this project: Model Training and Model Deployment.
+İlk tahmin işlemi için için tahmin süresi 20 saniye kadar sürebilir (Bunun sebebi model yüklendiği içindir). Ancak daha sonra tahmin süresi büyük ölçüde azalmaktadır. 
+
+### Veri Seti Hakkında
+
+MNIST ("Modified National Institute of Standards and Technology") verisi, derin öğrenmenin fiilen "merhaba dünya" veri kümesidir. 1999'da piyasaya sürüldüğünden bu yana, el yazısı görüntülerden oluşan bu klasik veri kümesi, sınıflandırma algoritmalarını karşılaştırmak için oluşturulmuştur.
+
+Mnist datası el yazısıyla yazılmış rakamların görüntülerinden oluşan bir veri setidir. Bu veri setinde yer alan görüntüler 0-9 arasında yer alan rakamlardan ve 28*28 pixel boyutlarında tek kanallı (gri) görüntülerden oluşmaktadır. Veri seti 60000 eğitim, 10000 test olmak üzere toplam 70000 adet görüntüden oluşmaktadır.
+
+Veri seti hakkında daha fazla bilgi için: http://yann.lecun.com/exdb/mnist/index.html ziyaret edebilirsiniz.
 
 
 
 #### Model Training
 
-Link for Google Colab file where the model was trained: https://colab.research.google.com/drive/1_wvukMlBHb9Q987vILxWbEHybnTF77t-
 
 Training Process:
 
